@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basecamp — Widget Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #f0ebe0; color: #2c2416; min-height: 100vh; }
+
+  /* Fake Basecamp site */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #e8e0d0;
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d6a4f;
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 14px; color: #6b5c3e; text-decoration: none; }
+  .nav-links a:hover { color: #2d6a4f; }
+
+  .hero {
+    padding: 80px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: #2c2416;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: #2d6a4f; }
+  .hero p { font-size: 18px; color: #6b5c3e; line-height: 1.6; max-width: 580px; margin: 0 auto 36px; }
+  .hero-btn {
+    background: #2d6a4f;
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+  .feature-card {
+    background: #fff;
+    border: 1px solid #e8e0d0;
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .feature-icon { font-size: 28px; margin-bottom: 12px; }
+  .feature-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .feature-desc { font-size: 13px; color: #6b5c3e; line-height: 1.6; }
+
+  .demo-notice {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    background: #2c2416;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    z-index: 99999;
+    pointer-events: none;
+    animation: fadeInDown 0.5s ease 0.5s both;
+  }
+  .demo-notice span { color: #86efac; font-weight: 600; }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Demo notice -->
+<div class="demo-notice">👇 <span>BFS Widget</span> — click the button in the bottom right</div>
+
+<!-- Fake site -->
+<nav>
+  <div class="nav-logo">⛺ Basecamp</div>
+  <div class="nav-links">
+    <a href="#">Product</a>
+    <a href="#">Pricing</a>
+    <a href="#">Blog</a>
+    <a href="#">Sign in</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Project management<br>for <span>remote teams</span></h1>
+  <p>Basecamp brings everything your team needs to get work done in one place. No chaos, no missed messages.</p>
+  <button class="hero-btn">Try free for 30 days</button>
+</div>
+
+<div class="features">
+  <div class="feature-card">
+    <div class="feature-icon">📋</div>
+    <div class="feature-title">To-do lists</div>
+    <div class="feature-desc">Assign tasks, set due dates, and track progress across your whole team.</div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">💬</div>
+    <div class="feature-title">Message board</div>
+    <div class="feature-desc">Post announcements and keep conversations organized by topic.</div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">📁</div>
+    <div class="feature-title">File storage</div>
+    <div class="feature-desc">Store docs, images and files alongside related conversations.</div>
+  </div>
+</div>
+
+<!-- BFS Widget -->
+<script
+  src="widget.js"
+  data-webhook="https://thomasine-zincous-convocationally.ngrok-free.dev/webhook/bfs-query"
+  data-api-key=""
+  data-accent="#2d6a4f"
+  data-company="Basecamp"
+></script>
+
+</body>
+</html>
