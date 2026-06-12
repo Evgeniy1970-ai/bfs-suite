@@ -1,0 +1,250 @@
+{
+      "name": "BFS — 04 Upload",
+      "nodes": [
+        {
+          "parameters": {
+            "content": "## BFS — 04 Upload\n\n### How it works\n\n1. Receives data through a webhook.\n2. Prepares the received document with custom code.\n3. Sends a POST request to the OpenAI API for embeddings.\n4. Saves the document data to a Supabase database.\n5. Responds successfully back to the origin of the webhook.\n\n### Setup steps\n\n- [ ] Configure Webhook URL to receive data\n- [ ] Set up HTTP Request credentials for OpenAI API\n- [ ] Configure Supabase credentials to store data\n\n### Customization\n\nYou can customize the HTTP request parameters to change the API endpoint or data sent to OpenAI.",
+            "width": 480,
+            "height": 576
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -608,
+            -128
+          ],
+          "id": "9345492a-73de-4c65-997c-bf2d343a4812",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "content": "## Webhook processing\n\nHandles incoming webhook and prepares document.",
+            "width": 400,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -48,
+            -128
+          ],
+          "id": "c097d851-6fb7-4db4-8b15-57962d5f44f7",
+          "name": "Sticky Note1"
+        },
+        {
+          "parameters": {
+            "content": "## API interaction\n\nSends prepared document to OpenAI and saves result.",
+            "width": 400,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            400,
+            -128
+          ],
+          "id": "c9220043-19bf-432f-94c7-77dfc3be86a0",
+          "name": "Sticky Note2"
+        },
+        {
+          "parameters": {
+            "content": "## Webhook response\n\nResponds back to the webhook origin.",
+            "width": 240,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            832,
+            -128
+          ],
+          "id": "ea22a1c6-8c35-4e27-af39-ecd9f30167d6",
+          "name": "Sticky Note3"
+        },
+        {
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "bfs-upload",
+            "responseMode": "responseNode",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            0,
+            0
+          ],
+          "id": "5ab6c826-6827-4bea-8a51-9cf2d0cb254a",
+          "name": "When Document Uploaded",
+          "webhookId": "YOUR_WEBHOOK_ID"
+        },
+        {
+          "parameters": {
+            "jsCode": "const body = $input.first().json.body;\n\nconst title = body.title;\nconst content = body.content;\nconst agentType = body.agent_type;\nconst isPublic = body.is_public || false;\nconst clientId = body.client_id;\n\nif (!title || !content || !agentType) {\n  throw new Error('Missing required fields: title, content, agent_type');\n}\n\nreturn [{\n  json: {\n    title,\n    content,\n    agent_type: agentType,\n    is_public: isPublic,\n    client_id: clientId,\n    metadata: JSON.stringify({\n      title,\n      is_public: isPublic,\n      agent_type: agentType\n    })\n  }\n}];"
+          },
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            208,
+            0
+          ],
+          "id": "9ffd6177-5880-4d2f-9217-8b1c48be6687",
+          "name": "Prepare Upload Data"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://api.openai.com/v1/embeddings",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpHeaderAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"input\": \"={{ $json.content }}\",\n  \"model\": \"text-embedding-3-small\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            448,
+            0
+          ],
+          "id": "997b6d57-781b-4f26-9297-8723da044c26",
+          "name": "Post to OpenAI API",
+          "credentials": {
+            "httpHeaderAuth": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAI API"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "tableId": "documents",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "title",
+                  "fieldValue": "={{ $('Prepare Upload Data').item.json.title }}"
+                },
+                {
+                  "fieldId": "content",
+                  "fieldValue": "={{ $('Prepare Upload Data').item.json.content }}"
+                },
+                {
+                  "fieldId": "agent_type",
+                  "fieldValue": "={{ $('Prepare Upload Data').item.json.agent_type }}"
+                },
+                {
+                  "fieldId": "is_public",
+                  "fieldValue": "={{ $('Prepare Upload Data').item.json.is_public }}"
+                },
+                {
+                  "fieldId": "client_id",
+                  "fieldValue": "={{ $('Prepare Upload Data').item.json.client_id }}"
+                },
+                {
+                  "fieldId": "embedding",
+                  "fieldValue": "={{ $json.data[0].embedding }}"
+                },
+                {
+                  "fieldId": "metadata",
+                  "fieldValue": "={{ $('Prepare Upload Data').item.json.metadata }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            656,
+            0
+          ],
+          "id": "7d124cc5-1e33-4c0a-999a-29683b7f8076",
+          "name": "Store in Supabase",
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "{\n  \"success\": true,\n  \"message\": \"Document uploaded and indexed successfully\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            880,
+            0
+          ],
+          "id": "90f61aec-3cd3-4011-b8a9-fd80e51d84cc",
+          "name": "Send Success Response"
+        }
+      ],
+      "pinData": {},
+      "connections": {
+        "When Document Uploaded": {
+          "main": [
+            [
+              {
+                "node": "Prepare Upload Data",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Prepare Upload Data": {
+          "main": [
+            [
+              {
+                "node": "Post to OpenAI API",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Post to OpenAI API": {
+          "main": [
+            [
+              {
+                "node": "Store in Supabase",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Store in Supabase": {
+          "main": [
+            [
+              {
+                "node": "Send Success Response",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "active": true,
+      "settings": {
+        "executionOrder": "v1",
+        "binaryMode": "separate",
+        "availableInMCP": false
+      },
+      "versionId": "YOUR_VERSION_ID",
+      "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "YOUR_N8N_INSTANCE_ID"
+      },
+      "id": "YOUR_WORKFLOW_ID",
+      "tags": []
+    }

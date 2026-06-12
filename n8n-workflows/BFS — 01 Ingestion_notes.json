@@ -1,0 +1,232 @@
+{
+      "name": "BFS — 01 Ingestion",
+      "nodes": [
+        {
+          "parameters": {
+            "content": "## BFS — 01 Ingestion\n\n### How it works\n\n1. The workflow starts manually when executing it.\n2. It retrieves documents without embeddings from Supabase.\n3. The documents are processed in batches.\n4. Each document batch's embedding is generated using OpenAI API.\n5. The generated embedding is saved back to Supabase.\n\n### Setup steps\n\n- [ ] Ensure access to Supabase database with necessary permissions.\n- [ ] Obtain and configure access to the OpenAI API for embedding generation.\n- [ ] Validate that the correct table and fields are specified in the Supabase node.\n\n### Customization\n\nYou can adjust the batch size in the 'Loop Over Items' node to optimize processing time and resource usage.",
+            "width": 480,
+            "height": 672
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -608,
+            -128
+          ],
+          "id": "faef7cfa-6c36-4228-82eb-c4b079bb321c",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "content": "## Trigger and fetch documents\n\nManually triggers the workflow and fetches documents without embeddings from Supabase.",
+            "width": 400,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -48,
+            -128
+          ],
+          "id": "06d9eb0c-cbc3-4737-8454-ce5405b8bcc0",
+          "name": "Sticky Note1"
+        },
+        {
+          "parameters": {
+            "content": "## Process and save embeddings\n\nProcesses documents in batches, generates embeddings using OpenAI, and saves them back to Supabase.",
+            "width": 608,
+            "height": 400,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            400,
+            -128
+          ],
+          "id": "d5612e84-89f5-4409-830d-848f69dfe170",
+          "name": "Sticky Note2"
+        },
+        {
+          "parameters": {},
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            0,
+            0
+          ],
+          "id": "f3b4d6a1-482e-40d7-ac42-2d2576241183",
+          "name": "Manual Execution Trigger"
+        },
+        {
+          "parameters": {
+            "operation": "getAll",
+            "tableId": "documents",
+            "returnAll": true
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            208,
+            0
+          ],
+          "id": "f25fda2a-7e0c-4709-8904-02dbad70b801",
+          "name": "Fetch Docs Missing Embeddings",
+          "credentials": {
+            "supabaseApi": {
+              "id": "S5wwcVtEY45PnYfM",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "options": {}
+          },
+          "type": "n8n-nodes-base.splitInBatches",
+          "typeVersion": 3,
+          "position": [
+            448,
+            0
+          ],
+          "id": "1d1d9a66-0468-4eac-a2fb-fd27ab3af98f",
+          "name": "Batch Process Documents"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://api.openai.com/v1/embeddings",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpHeaderAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"model\": \"text-embedding-3-small\",\n  \"input\": \"{{ $json.content }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            656,
+            96
+          ],
+          "id": "a215d3ff-db7d-4887-867c-a499a9fd48f2",
+          "name": "Post to OpenAI Embeddings",
+          "credentials": {
+            "httpHeaderAuth": {
+              "id": "SkSxKvSnCgmH3dLm",
+              "name": "OpenAI API"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "update",
+            "tableId": "documents",
+            "filters": {
+              "conditions": [
+                {
+                  "keyName": "id",
+                  "condition": "eq",
+                  "keyValue": "={{ $('Batch Process Documents').item.json.id }}"
+                }
+              ]
+            },
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "embedding",
+                  "fieldValue": "={{ $json.data[0].embedding }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            864,
+            96
+          ],
+          "id": "aed96a61-f179-4f0b-a10d-a04ca200f0fb",
+          "name": "Store Embedding in Supabase",
+          "credentials": {
+            "supabaseApi": {
+              "id": "S5wwcVtEY45PnYfM",
+              "name": "BFS Supabase"
+            }
+          }
+        }
+      ],
+      "pinData": {},
+      "connections": {
+        "Manual Execution Trigger": {
+          "main": [
+            [
+              {
+                "node": "Fetch Docs Missing Embeddings",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Fetch Docs Missing Embeddings": {
+          "main": [
+            [
+              {
+                "node": "Batch Process Documents",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Batch Process Documents": {
+          "main": [
+            [],
+            [
+              {
+                "node": "Post to OpenAI Embeddings",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Post to OpenAI Embeddings": {
+          "main": [
+            [
+              {
+                "node": "Store Embedding in Supabase",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Store Embedding in Supabase": {
+          "main": [
+            [
+              {
+                "node": "Batch Process Documents",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "active": false,
+      "settings": {
+        "executionOrder": "v1",
+        "binaryMode": "separate",
+        "availableInMCP": false
+      },
+      "versionId": "1c6e326c-78af-4f56-9849-6da83d986ed2",
+      "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "b8dc6b20db443e18892a3a7897076c0d1944dd1743dde315e88e0ce0d3ed7ca6"
+      },
+      "id": "YNqUrdbJtqdQi78WY6pWS",
+      "tags": []
+    }

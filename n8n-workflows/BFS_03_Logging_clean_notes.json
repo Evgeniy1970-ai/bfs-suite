@@ -1,0 +1,214 @@
+{
+      "name": "BFS — 03 Logging",
+      "nodes": [
+        {
+          "parameters": {
+            "content": "## BFS — 03 Logging\n\n### How it works\n\n1. Triggered by another workflow execution.\n2. Saves conversation details to the Supabase database.\n3. Logs additional details to the agent logs in Supabase.\n\n### Setup steps\n\n- [ ] Ensure Supabase credentials are configured properly.\n- [ ] Verify access permissions for database operations.\n\n### Customization\n\nYou can customize the Supabase table names or database connections according to your project needs.",
+            "width": 480,
+            "height": 512
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -608,
+            -128
+          ],
+          "id": "812d794b-9b10-4e38-bc8f-95e06d89d44a",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "content": "## Logging setup\n\nTriggers when executed by another workflow and logs data to Supabase.",
+            "width": 608,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -48,
+            -128
+          ],
+          "id": "2d7df23d-e71b-45bf-bb7f-21eba3865451",
+          "name": "Sticky Note1"
+        },
+        {
+          "parameters": {
+            "workflowInputs": {
+              "values": [
+                {
+                  "name": "session_id"
+                },
+                {
+                  "name": "message"
+                },
+                {
+                  "name": "response"
+                },
+                {
+                  "name": "agent"
+                },
+                {
+                  "name": "channel"
+                },
+                {
+                  "name": "tokens_used",
+                  "type": "number"
+                },
+                {
+                  "name": "response_ms",
+                  "type": "number"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.executeWorkflowTrigger",
+          "typeVersion": 1.1,
+          "position": [
+            0,
+            0
+          ],
+          "id": "8f67d308-9460-4362-a517-731985437a89",
+          "name": "Trigger on External Execution"
+        },
+        {
+          "parameters": {
+            "tableId": "conversations",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "session_id",
+                  "fieldValue": "={{ $json.session_id }}"
+                },
+                {
+                  "fieldId": "user_message",
+                  "fieldValue": "={{ $json.message }}"
+                },
+                {
+                  "fieldId": "ai_response",
+                  "fieldValue": "={{ $json.response }}"
+                },
+                {
+                  "fieldId": "agent_type",
+                  "fieldValue": "={{ $json.agent }}"
+                },
+                {
+                  "fieldId": "channel",
+                  "fieldValue": "={{ $json.channel }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            208,
+            0
+          ],
+          "id": "c72a3aae-bb58-4a97-b6bb-cc4a86201498",
+          "name": "Log to Conversations Table",
+          "executeOnce": true,
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "tableId": "agent_logs",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "agent_type",
+                  "fieldValue": "={{ $('Trigger on External Execution').first().json.agent }}"
+                },
+                {
+                  "fieldId": "status",
+                  "fieldValue": "success"
+                },
+                {
+                  "fieldId": "tokens_used",
+                  "fieldValue": "={{ $('Trigger on External Execution').item.json.tokens_used }}"
+                },
+                {
+                  "fieldId": "response_ms",
+                  "fieldValue": "={{ $('Trigger on External Execution').item.json.response_ms }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            416,
+            0
+          ],
+          "id": "2f9b0edd-5f7f-448f-b8a7-1d4263dca2de",
+          "name": "Log to Agent Logs Table",
+          "executeOnce": true,
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        }
+      ],
+      "pinData": {
+        "Trigger on External Execution": [
+          {
+            "json": {
+              "session_id": "sess_example_123456",
+              "message": "What is the vacation policy?",
+              "response": "Example agent response goes here.",
+              "agent": "hr",
+              "channel": "dashboard",
+              "tokens_used": 120,
+              "response_ms": 1500
+            },
+            "pairedItem": {
+              "item": 0
+            }
+          }
+        ]
+      },
+      "connections": {
+        "Trigger on External Execution": {
+          "main": [
+            [
+              {
+                "node": "Log to Conversations Table",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Log to Conversations Table": {
+          "main": [
+            [
+              {
+                "node": "Log to Agent Logs Table",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "active": true,
+      "settings": {
+        "executionOrder": "v1",
+        "binaryMode": "separate",
+        "availableInMCP": false
+      },
+      "versionId": "YOUR_VERSION_ID",
+      "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "YOUR_N8N_INSTANCE_ID"
+      },
+      "id": "YOUR_WORKFLOW_ID",
+      "tags": []
+    }

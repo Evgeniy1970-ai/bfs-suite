@@ -1,0 +1,185 @@
+{
+      "name": "BFS — 05 Escalation",
+      "nodes": [
+        {
+          "parameters": {
+            "content": "## BFS — 05 Escalation\n\n### How it works\n\n1. Workflow is triggered when executed by another one.\n2. Sends a text message via Telegram.\n3. Creates a new row in Supabase.\n\n### Setup steps\n\n- [ ] Ensure the Telegram API token is configured in the 'Send a text message' node.\n- [ ] Configure Supabase credentials in the 'Create a row' node.\n\n### Customization\n\nAdjust the message content and Supabase row details as needed for different use cases.",
+            "width": 480,
+            "height": 560
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -608,
+            -128
+          ],
+          "id": "f06438b3-9ac6-447f-96ac-300793e148a4",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "content": "## Triggered notification and logging\n\nWhen executed by another workflow, sends a text message via Telegram and records the action in Supabase.",
+            "width": 608,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -48,
+            -128
+          ],
+          "id": "4ce73d93-cfe9-420e-8142-f0778f88d748",
+          "name": "Sticky Note1"
+        },
+        {
+          "parameters": {
+            "workflowInputs": {
+              "values": [
+                {
+                  "name": "session_id"
+                },
+                {
+                  "name": "client_name"
+                },
+                {
+                  "name": "agent_type"
+                },
+                {
+                  "name": "channel"
+                },
+                {
+                  "name": "user_message"
+                },
+                {
+                  "name": "escalation_reason"
+                },
+                {
+                  "name": "similarity_score",
+                  "type": "number"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.executeWorkflowTrigger",
+          "typeVersion": 1.1,
+          "position": [
+            0,
+            0
+          ],
+          "id": "33aa8f7d-6183-4d1c-bb89-0e5d32a0a799",
+          "name": "Trigger on External Workflow"
+        },
+        {
+          "parameters": {
+            "chatId": "YOUR_TELEGRAM_CHAT_ID",
+            "text": "=🚨 Escalation — BFS Suite\n━━━━━━━━━━━━━━━━━━━━\n🏢 Client: {{ $json.client_name }}\n🤖 Agent: {{ $json.agent_type }}\n📡 Channel: {{ $json.channel }}\n⏰ Time: {{ $now.toFormat('HH:mm, dd MMM yyyy') }}\n\n❓ User question:\n\"{{ $json.user_message }}\"\n\n⚠️ Escalation reason: {{ $json.escalation_reason.replace('_', ' ') }}\n📊 Similarity: {{ $json.similarity_score }}\n\n🆔 Session: {{ $json.session_id }}",
+            "additionalFields": {}
+          },
+          "type": "n8n-nodes-base.telegram",
+          "typeVersion": 1.2,
+          "position": [
+            208,
+            0
+          ],
+          "id": "2aa57bc4-90b0-4a9e-89ad-929fe420ab75",
+          "name": "Send Telegram Message",
+          "webhookId": "YOUR_WEBHOOK_ID",
+          "credentials": {
+            "telegramApi": {
+              "id": "YOUR_TELEGRAM_CREDENTIAL_ID",
+              "name": "BFS Escalation Bot"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "tableId": "escalations",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "session_id",
+                  "fieldValue": "={{ $('Trigger on External Workflow').first().json.session_id }}"
+                },
+                {
+                  "fieldId": "client_name",
+                  "fieldValue": "={{ $('Trigger on External Workflow').first().json.client_name }}"
+                },
+                {
+                  "fieldId": "agent_type",
+                  "fieldValue": "={{ $('Trigger on External Workflow').first().json.agent_type }}"
+                },
+                {
+                  "fieldId": "channel",
+                  "fieldValue": "={{ $('Trigger on External Workflow').first().json.channel }}"
+                },
+                {
+                  "fieldId": "user_message",
+                  "fieldValue": "={{ $('Trigger on External Workflow').first().json.user_message }}"
+                },
+                {
+                  "fieldId": "escalation_reason",
+                  "fieldValue": "={{ $('Trigger on External Workflow').first().json.escalation_reason }}"
+                },
+                {
+                  "fieldId": "similarity_score",
+                  "fieldValue": "={{ $('Trigger on External Workflow').first().json.similarity_score }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            416,
+            0
+          ],
+          "id": "fc486cd7-1090-42b2-a036-092831a46df3",
+          "name": "Insert Row in Supabase",
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        }
+      ],
+      "pinData": {},
+      "connections": {
+        "Trigger on External Workflow": {
+          "main": [
+            [
+              {
+                "node": "Send Telegram Message",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send Telegram Message": {
+          "main": [
+            [
+              {
+                "node": "Insert Row in Supabase",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "active": true,
+      "settings": {
+        "executionOrder": "v1",
+        "binaryMode": "separate",
+        "availableInMCP": false
+      },
+      "versionId": "YOUR_VERSION_ID",
+      "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "YOUR_N8N_INSTANCE_ID"
+      },
+      "id": "YOUR_WORKFLOW_ID",
+      "tags": []
+    }
