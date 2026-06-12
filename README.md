@@ -2,7 +2,7 @@
 
 > Multi-agent AI customer support platform for small businesses. Three specialized agents (Legal, HR, Support) powered by RAG, intelligent routing, and real-time escalation — all under one roof.
 
-![Architecture](./architecture.svg)
+![Architecture](./bfs_architecture.svg)
 
 ---
 
