@@ -1,0 +1,248 @@
+{
+      "name": "BFS — 01 Ingestion",
+      "nodes": [
+        {
+          "parameters": {
+            "content": "## BFS — 01 Ingestion\n\n### How it works\n\n1. Manually trigger the workflow execution.\n2. Retrieve documents from Supabase without embeddings.\n3. Process each document in batches.\n4. Generate embeddings using an API request.\n5. Save embeddings back to Supabase.\n\n### Setup steps\n\n- [ ] Set up Supabase credentials for database access\n- [ ] Configure HTTP node with API key for OpenAI embeddings\n- [ ] Ensure the Supabase table structure supports embedding storage\n\n### Customization\n\nYou can adjust batch sizes in the 'Loop Over Items' node.",
+            "width": 480,
+            "height": 576
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -608,
+            -176
+          ],
+          "id": "84790bb4-55dc-40dc-9be2-2fc7dde08a06",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "content": "## Trigger workflow manually\n\nInitial node to manually start the workflow.",
+            "width": 240,
+            "height": 336,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -48,
+            -176
+          ],
+          "id": "38b2376d-6c55-4af8-82c2-d1c324a75487",
+          "name": "Sticky Note1"
+        },
+        {
+          "parameters": {
+            "content": "## Retrieve and process documents\n\nFetches documents without embeddings and processes them in batches.",
+            "width": 400,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            224,
+            -128
+          ],
+          "id": "db944dd4-10c2-461e-866b-2ca82632e4db",
+          "name": "Sticky Note2"
+        },
+        {
+          "parameters": {
+            "content": "## Generate and save embeddings\n\nGenerates embeddings for documents and saves them back to Supabase.",
+            "width": 400,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            656,
+            -32
+          ],
+          "id": "c7099d7e-10e9-47fe-8030-a031338fc467",
+          "name": "Sticky Note3"
+        },
+        {
+          "parameters": {},
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            0,
+            0
+          ],
+          "id": "f3b4d6a1-482e-40d7-ac42-2d2576241183",
+          "name": "Manual Workflow Trigger"
+        },
+        {
+          "parameters": {
+            "operation": "getAll",
+            "tableId": "documents",
+            "returnAll": true
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            272,
+            0
+          ],
+          "id": "f25fda2a-7e0c-4709-8904-02dbad70b801",
+          "name": "Fetch Docs Without Embeddings",
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "options": {}
+          },
+          "type": "n8n-nodes-base.splitInBatches",
+          "typeVersion": 3,
+          "position": [
+            480,
+            0
+          ],
+          "id": "1d1d9a66-0468-4eac-a2fb-fd27ab3af98f",
+          "name": "Batch Process Documents"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://api.openai.com/v1/embeddings",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpHeaderAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"model\": \"text-embedding-3-small\",\n  \"input\": \"{{ $json.content }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.4,
+          "position": [
+            704,
+            96
+          ],
+          "id": "a215d3ff-db7d-4887-867c-a499a9fd48f2",
+          "name": "Post Embeddings to OpenAI",
+          "credentials": {
+            "httpHeaderAuth": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAI API"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "update",
+            "tableId": "documents",
+            "filters": {
+              "conditions": [
+                {
+                  "keyName": "id",
+                  "condition": "eq",
+                  "keyValue": "={{ $('Batch Process Documents').item.json.id }}"
+                }
+              ]
+            },
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "embedding",
+                  "fieldValue": "={{ $json.data[0].embedding }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            912,
+            96
+          ],
+          "id": "aed96a61-f179-4f0b-a10d-a04ca200f0fb",
+          "name": "Store Embeddings in Supabase",
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        }
+      ],
+      "pinData": {},
+      "connections": {
+        "Manual Workflow Trigger": {
+          "main": [
+            [
+              {
+                "node": "Fetch Docs Without Embeddings",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Fetch Docs Without Embeddings": {
+          "main": [
+            [
+              {
+                "node": "Batch Process Documents",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Batch Process Documents": {
+          "main": [
+            [],
+            [
+              {
+                "node": "Post Embeddings to OpenAI",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Post Embeddings to OpenAI": {
+          "main": [
+            [
+              {
+                "node": "Store Embeddings in Supabase",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Store Embeddings in Supabase": {
+          "main": [
+            [
+              {
+                "node": "Batch Process Documents",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "active": false,
+      "settings": {
+        "executionOrder": "v1",
+        "binaryMode": "separate",
+        "availableInMCP": false
+      },
+      "versionId": "YOUR_VERSION_ID",
+      "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "YOUR_N8N_INSTANCE_ID"
+      },
+      "id": "YOUR_WORKFLOW_ID",
+      "tags": []
+    }

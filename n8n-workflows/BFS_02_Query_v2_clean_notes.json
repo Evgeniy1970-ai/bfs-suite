@@ -1,0 +1,2485 @@
+{
+      "name": "BFS — 02 Query",
+      "nodes": [
+        {
+          "parameters": {
+            "content": "## BFS — 02 Query\n\n### How it works\n\n1. Triggers when a webhook is received and sets a start time.\n2. Classifies whether the request requires escalation or can be passed to AI.\n3. Routes the request to the appropriate AI or escalation workflow.\n4. Handles AI-generated responses or escalates them to the correct department.\n5. Logs interactions and final responses are completed.\n\n### Setup steps\n\n- [ ] Configure webhook URL for the trigger node\n- [ ] Set up OpenAI credentials for AI interactions\n- [ ] Ensure Sub-workflows for Legal, HR, and Support are configured\n- [ ] Set up Supabase connections for logging knowledge gaps\n- [ ] Configure response limits and fallbacks\n\n### Customization\n\nAdjust AI models or routing logic based on specific needs or feedback.",
+            "width": 480,
+            "height": 896
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -2064,
+            -448
+          ],
+          "id": "810ed1ba-49ee-4b06-80ef-5c22d586ab99",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "content": "## Webhook initiation\n\nBegins workflow with a webhook and sets start time.",
+            "width": 416,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -1504,
+            496
+          ],
+          "id": "e87226a3-6a3b-45fa-9561-66444abb4178",
+          "name": "Sticky Note1"
+        },
+        {
+          "parameters": {
+            "content": "## Request classification\n\nDetermines if the request requires escalation or message passing.",
+            "width": 544,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -1056,
+            496
+          ],
+          "id": "61a4f8d7-6382-4fe5-9e14-d5d6b6d3cc6b",
+          "name": "Sticky Note2"
+        },
+        {
+          "parameters": {
+            "content": "## Escalation handling\n\nHandles user-requested escalations and responses to them.",
+            "width": 480,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -480,
+            400
+          ],
+          "id": "b611db44-8093-4936-90fa-f90bb6c1f4ae",
+          "name": "Sticky Note3"
+        },
+        {
+          "parameters": {
+            "content": "## Message routing\n\nSets the message for routing to the AI system.",
+            "width": 240,
+            "height": 304,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -480,
+            736
+          ],
+          "id": "a2f70248-5c02-4653-bf68-61ba23a2123d",
+          "name": "Sticky Note4"
+        },
+        {
+          "parameters": {
+            "content": "## AI query response\n\nRoutes messages through AI and handles responses.",
+            "width": 480,
+            "height": 464,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -208,
+            736
+          ],
+          "id": "7a8d317e-9cb9-469d-a174-b3051676fd0c",
+          "name": "Sticky Note5"
+        },
+        {
+          "parameters": {
+            "content": "## Switch logic\n\nDirects query to relevant department or handles fallback.",
+            "width": 240,
+            "height": 416,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            304,
+            528
+          ],
+          "id": "cba8a635-a50a-4a03-8cd5-58e40f05b53d",
+          "name": "Sticky Note6"
+        },
+        {
+          "parameters": {
+            "content": "## Legal query processing\n\nHandles legal queries via AI and logs interactions.",
+            "width": 1568,
+            "height": 176,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            320,
+            -448
+          ],
+          "id": "a800865b-1d80-4cd7-be90-c6363aab5bce",
+          "name": "Sticky Note7"
+        },
+        {
+          "parameters": {
+            "content": "## HR query processing\n\nHandles HR queries via AI and logs interactions.",
+            "width": 1568,
+            "height": 656,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            576,
+            240
+          ],
+          "id": "c6a4530d-3194-43e2-ab16-e007310777c7",
+          "name": "Sticky Note8"
+        },
+        {
+          "parameters": {
+            "content": "## Support query processing\n\nHandles support queries via AI and logs interactions.",
+            "width": 1568,
+            "height": 656,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            576,
+            928
+          ],
+          "id": "4700a0a0-ceb9-4deb-9df8-f40188e40a93",
+          "name": "Sticky Note9"
+        },
+        {
+          "parameters": {
+            "content": "## Fallback and escalation\n\nHandles fallback responses and ambiguous escalations.",
+            "width": 624,
+            "height": 800,
+            "color": 7
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -80,
+            1312
+          ],
+          "id": "f1a36c6f-b04a-4dd8-b08b-b6009cfe126a",
+          "name": "Sticky Note10"
+        },
+        {
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "bfs-query",
+            "responseMode": "responseNode",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            -1456,
+            624
+          ],
+          "id": "2a1427da-e37d-47da-80d2-c7f3fa8700f7",
+          "name": "Receive BFS Query Webhook",
+          "webhookId": "YOUR_WEBHOOK_ID"
+        },
+        {
+          "parameters": {
+            "modelId": {
+              "__rl": true,
+              "value": "gpt-4o-mini",
+              "mode": "list",
+              "cachedResultName": "GPT-4O-MINI"
+            },
+            "responses": {
+              "values": [
+                {
+                  "content": "=Classify the following user message into exactly one category: \nlegal, hr, support, or none.\n\n- legal: contracts, policies, regulations, legal documents\n- hr: employees, hiring, vacation, salary, work policy, remote work\n- support: product questions, how-to, troubleshooting, pricing\n- none: anything unrelated to the above categories\n\nThe message can be in any language. Classify based on the \ntopic, not the language.\n\nAlso rate your confidence in this classification from 0.0 to 1.0.\nUse a LOW confidence score (below 0.7) when the message could \nreasonably belong to more than one category (e.g. legal/hr overlap).\n\nRespond with ONLY a JSON object, nothing else:\n{\"agent_type\": \"legal\", \"confidence\": 0.95}\n\nUser message: {{ $json.message }}"
+                }
+              ]
+            },
+            "builtInTools": {},
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.openAi",
+          "typeVersion": 2.1,
+          "position": [
+            -160,
+            848
+          ],
+          "id": "d4e9456d-5a3f-437a-8d82-6a09df7c6e47",
+          "name": "OpenAI Router",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "rules": {
+              "values": [
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "leftValue": "={{ $json.route_to }}",
+                        "rightValue": "legal",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals"
+                        },
+                        "id": "f243fce2-9071-4c2e-9e8f-21d13c5f3ca1"
+                      }
+                    ],
+                    "combinator": "and"
+                  },
+                  "renameOutput": true,
+                  "outputKey": "legal"
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "621c5082-311f-48e3-9701-9bdef809856e",
+                        "leftValue": "={{ $json.route_to }}",
+                        "rightValue": "hr",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  },
+                  "renameOutput": true,
+                  "outputKey": "hr"
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "71198425-2d70-4b2e-a0fd-85adf6a72495",
+                        "leftValue": "={{ $json.route_to }}",
+                        "rightValue": "support",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  },
+                  "renameOutput": true,
+                  "outputKey": "support"
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "05fa30c7-f747-4305-a53f-378a2301c856",
+                        "leftValue": "={{ $json.route_to }}",
+                        "rightValue": "ambiguous",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  },
+                  "renameOutput": true,
+                  "outputKey": "ambiguous"
+                }
+              ]
+            },
+            "options": {
+              "fallbackOutput": "extra"
+            }
+          },
+          "type": "n8n-nodes-base.switch",
+          "typeVersion": 3.4,
+          "position": [
+            352,
+            688
+          ],
+          "id": "24422cce-8e54-4672-8c39-e2d1c4e71c3e",
+          "name": "Route by Query Type"
+        },
+        {
+          "parameters": {
+            "model": "text-embedding-ada-002",
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+          "typeVersion": 1.2,
+          "position": [
+            448,
+            128
+          ],
+          "id": "9deea699-8efb-4a51-84d6-bc6b8f497b42",
+          "name": "Generate Legal Embeddings",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "mode": "load",
+            "tableName": {
+              "__rl": true,
+              "value": "documents",
+              "mode": "list",
+              "cachedResultName": "documents"
+            },
+            "prompt": "={{ $('Receive BFS Query Webhook').item.json.body.message }}",
+            "options": {
+              "queryName": "match_documents"
+            }
+          },
+          "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+          "typeVersion": 1.3,
+          "position": [
+            368,
+            -96
+          ],
+          "id": "e187e9a3-d71a-4dcb-93af-f52d761757e6",
+          "name": "Legal Vector Store Lookup",
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "model": "text-embedding-ada-002",
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+          "typeVersion": 1.2,
+          "position": [
+            448,
+            704
+          ],
+          "id": "163cef86-af4a-4bd8-b072-0896b898aedd",
+          "name": "Generate HR Embeddings",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "mode": "load",
+            "tableName": {
+              "__rl": true,
+              "value": "documents",
+              "mode": "list",
+              "cachedResultName": "documents"
+            },
+            "prompt": "={{ $('Receive BFS Query Webhook').item.json.body.message }}",
+            "options": {
+              "queryName": "match_documents"
+            }
+          },
+          "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+          "typeVersion": 1.3,
+          "position": [
+            624,
+            592
+          ],
+          "id": "88150e93-ca5f-49a1-ade9-9f441fc7058b",
+          "name": "HR Vector Store Lookup",
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "model": "text-embedding-ada-002",
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+          "typeVersion": 1.2,
+          "position": [
+            448,
+            1184
+          ],
+          "id": "65a65da1-7988-4d33-8432-6128903047c1",
+          "name": "Generate Support Embeddings",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "mode": "load",
+            "tableName": {
+              "__rl": true,
+              "value": "documents",
+              "mode": "list",
+              "cachedResultName": "documents"
+            },
+            "prompt": "={{ $('Receive BFS Query Webhook').item.json.body.message }}",
+            "options": {
+              "queryName": "match_documents"
+            }
+          },
+          "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+          "typeVersion": 1.3,
+          "position": [
+            624,
+            1184
+          ],
+          "id": "c4e2184a-5a60-4bfb-ab33-af6acde96dcc",
+          "name": "Support Vector Store Lookup",
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "modelId": {
+              "__rl": true,
+              "value": "gpt-4o-mini",
+              "mode": "list",
+              "cachedResultName": "GPT-4O-MINI"
+            },
+            "responses": {
+              "values": [
+                {
+                  "content": "=You are a legal assistant for small businesses. Answer the user's question based on the context below.\n\nContext:\n{{ $input.all().map(i => i.json.document?.pageContent).join('\\n\\n---\\n\\n') }}\n\nSources: {{ $input.all().map(i => i.json.document?.metadata?.title).filter(t => t).join(', ') }}\n\nUser question: {{ $('Receive BFS Query Webhook').item.json.body.message }}\n\nProvide a clear, accurate answer based only on the context provided. At the end of your answer, always include a \"Sources:\" section listing the documents you used from the Sources field above.\nAlways respond in the same language the user wrote in."
+                }
+              ]
+            },
+            "builtInTools": {},
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.openAi",
+          "typeVersion": 2.1,
+          "position": [
+            944,
+            -48
+          ],
+          "id": "e663c665-2b02-4864-81d7-1bce740657b0",
+          "name": "Legal Query Agent",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          },
+          "onError": "continueErrorOutput"
+        },
+        {
+          "parameters": {
+            "modelId": {
+              "__rl": true,
+              "value": "gpt-4o-mini",
+              "mode": "list",
+              "cachedResultName": "GPT-4O-MINI"
+            },
+            "responses": {
+              "values": [
+                {
+                  "content": "=You are an HR assistant for small businesses. Answer the user's question based on the context below.\n\nContext:\n{{ $input.all().map(i => i.json.document?.pageContent).join('\\n\\n---\\n\\n') }}\n\nSources: {{ $input.all().map(i => i.json.document?.metadata?.title).filter(t => t).join(', ') }}\n\nUser question: {{ $('Receive BFS Query Webhook').item.json.body.message }}\n\nProvide a clear, accurate answer based only on the context provided. At the end of your answer, always include a \"Sources:\" section listing the documents you used from the Sources field above.\nAlways respond in the same language the user wrote in."
+                }
+              ]
+            },
+            "simplify": false,
+            "builtInTools": {},
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.openAi",
+          "typeVersion": 2.1,
+          "position": [
+            1200,
+            640
+          ],
+          "id": "abf8425a-8e9e-487e-88a5-895dd998ac67",
+          "name": "HR Query Agent",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          },
+          "onError": "continueErrorOutput"
+        },
+        {
+          "parameters": {
+            "modelId": {
+              "__rl": true,
+              "value": "gpt-4o-mini",
+              "mode": "list",
+              "cachedResultName": "GPT-4O-MINI"
+            },
+            "responses": {
+              "values": [
+                {
+                  "content": "=You are a customer support assistant for small businesses. Answer the user's question based on the context below.\n\nContext:\n{{ $input.all().map(i => i.json.document?.pageContent).join('\\n\\n---\\n\\n') }}\n\nSources: {{ $input.all().map(i => i.json.document?.metadata?.title).filter(t => t).join(', ') }}\n\nUser question: {{ $('Receive BFS Query Webhook').item.json.body.message }}\n\nProvide a clear, accurate answer based only on the context provided. At the end of your answer, always include a \"Sources:\" section listing the documents you used from the Sources field above.\nAlways respond in the same language the user wrote in."
+                }
+              ]
+            },
+            "builtInTools": {},
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.openAi",
+          "typeVersion": 2.1,
+          "position": [
+            1200,
+            1328
+          ],
+          "id": "725edf99-7898-4c80-b960-4cfd44601bc2",
+          "name": "Support Query Agent",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          },
+          "onError": "continueErrorOutput"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "={\n  \"response\": {{ $json.output[0].content[0].text.toJsonString() }},\n  \"agent\": \"legal\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1296,
+            -144
+          ],
+          "id": "b9ad16ae-a8aa-48cf-b074-b62f2e8d1bf0",
+          "name": "Respond to Legal Query"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "={\n  \"response\": {{ $json.output[0].content[0].text.toJsonString() }},\n  \"agent\": \"hr\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1552,
+            544
+          ],
+          "id": "f4d64f9a-225b-4838-88ea-eceaf20824d4",
+          "name": "Respond to HR Query"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "={\n  \"response\": {{ $json.output[0].content[0].text.toJsonString() }},\n  \"agent\": \"support\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1552,
+            1232
+          ],
+          "id": "53cfe562-18ee-47de-907e-8de61507ebf4",
+          "name": "Respond to Support Query"
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "gr0N5g3xLRTa3njaklJvS",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/gr0N5g3xLRTa3njaklJvS",
+              "cachedResultName": "BFS — 03 Logging"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "session_id": "={{ $('Receive BFS Query Webhook').item.json.body.session_id }}",
+                "message": "={{ $('Receive BFS Query Webhook').item.json.body.message }}",
+                "response": "={{ $('Legal Query Agent').item.json.output[0].content[0].text }}",
+                "agent": "legal",
+                "channel": "={{ $('Receive BFS Query Webhook').item.json.body.channel }}",
+                "tokens_used": "={{ $('Legal Query Agent').item.json.usage.total_tokens }}",
+                "response_ms": "={{ Date.now() - $('Set Start Time').item.json.start_time }}"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "message",
+                  "displayName": "message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "response",
+                  "displayName": "response",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "agent",
+                  "displayName": "agent",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "tokens_used",
+                  "displayName": "tokens_used",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                },
+                {
+                  "id": "response_ms",
+                  "displayName": "response_ms",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            1744,
+            -144
+          ],
+          "id": "fc8a8ca9-9334-4603-a704-1456221670f1",
+          "name": "Log Legal Query Calls",
+          "executeOnce": true
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "gr0N5g3xLRTa3njaklJvS",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/gr0N5g3xLRTa3njaklJvS",
+              "cachedResultName": "BFS — 03 Logging"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "session_id": "={{ $('Receive BFS Query Webhook').item.json.body.session_id }}",
+                "message": "={{ $('Receive BFS Query Webhook').item.json.body.message }}",
+                "response": "={{ $('HR Query Agent').item.json.output[0].content[0].text }}",
+                "agent": "hr",
+                "channel": "={{ $('Receive BFS Query Webhook').item.json.body.channel }}",
+                "response_ms": "={{ Date.now() - $('Set Start Time').item.json.start_time }}",
+                "tokens_used": "={{ $('HR Query Agent').item.json.usage.total_tokens }}"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "message",
+                  "displayName": "message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "response",
+                  "displayName": "response",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "agent",
+                  "displayName": "agent",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "tokens_used",
+                  "displayName": "tokens_used",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                },
+                {
+                  "id": "response_ms",
+                  "displayName": "response_ms",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            2000,
+            544
+          ],
+          "id": "f158a72f-ec01-4791-9728-4d9d272a6f58",
+          "name": "Log HR Query Calls",
+          "executeOnce": true
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "gr0N5g3xLRTa3njaklJvS",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/gr0N5g3xLRTa3njaklJvS",
+              "cachedResultName": "BFS — 03 Logging"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "session_id": "={{ $('Receive BFS Query Webhook').item.json.body.session_id }}",
+                "message": "={{ $('Receive BFS Query Webhook').item.json.body.message }}",
+                "response": "={{ $('Support Query Agent').item.json.output[0].content[0].text }}",
+                "agent": "support",
+                "channel": "={{ $('Receive BFS Query Webhook').item.json.body.channel }}",
+                "tokens_used": "={{ $('Support Query Agent').item.json.usage.total_tokens }}",
+                "response_ms": "={{ Date.now() - $('Set Start Time').item.json.start_time }}"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "message",
+                  "displayName": "message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "response",
+                  "displayName": "response",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "agent",
+                  "displayName": "agent",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "tokens_used",
+                  "displayName": "tokens_used",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                },
+                {
+                  "id": "response_ms",
+                  "displayName": "response_ms",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            2000,
+            1232
+          ],
+          "id": "15a9b259-fe75-456f-ba65-2724c8f371e6",
+          "name": "Log Support Query Calls",
+          "executeOnce": true
+        },
+        {
+          "parameters": {},
+          "type": "n8n-nodes-base.limit",
+          "typeVersion": 1,
+          "position": [
+            1776,
+            544
+          ],
+          "id": "9bdf3877-4149-4ee2-a1a6-f9bb9616abe9",
+          "name": "Limit HR Query Responses"
+        },
+        {
+          "parameters": {},
+          "type": "n8n-nodes-base.limit",
+          "typeVersion": 1,
+          "position": [
+            1520,
+            -144
+          ],
+          "id": "caceed45-82d8-4628-8723-9564858af58f",
+          "name": "Limit Legal Query Responses"
+        },
+        {
+          "parameters": {},
+          "type": "n8n-nodes-base.limit",
+          "typeVersion": 1,
+          "position": [
+            1776,
+            1232
+          ],
+          "id": "0a69d55d-418a-40f6-8c3b-57026d7c7eb5",
+          "name": "Limit Support Query Responses"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "{\n  \"error\": \"Unable to classify your request. Please try rephrasing your question.\",\n  \"agent\": \"none\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            -32,
+            1952
+          ],
+          "id": "68931f9d-4efb-4f76-8d3c-ab690e498bbd",
+          "name": "Fallback Response"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "{\n  \"error\": \"An error occurred while processing your legal request. Please try again.\",\n  \"agent\": \"legal\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1296,
+            48
+          ],
+          "id": "5e0ef3be-d27a-4ac2-85d3-27e5dd23541e",
+          "name": "Response Error Legal"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "{\n  \"error\": \"An error occurred while processing your HR request. Please try again.\",\n  \"agent\": \"hr\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1552,
+            736
+          ],
+          "id": "c7737c05-83af-4723-a384-16a7832ef1fe",
+          "name": "Response Error HR"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "{\n  \"error\": \"An error occurred while processing your support request. Please try again.\",\n  \"agent\": \"support\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1552,
+            1424
+          ],
+          "id": "ea36d67f-eb52-4fdd-bab4-621943942690",
+          "name": "Response Error Support"
+        },
+        {
+          "parameters": {
+            "jsCode": "for (const item of $input.all()) {\n  item.json.start_time = Date.now();\n}\n\nreturn $input.all();"
+          },
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            -1232,
+            624
+          ],
+          "id": "ca480e39-4bb1-4bcf-863a-bcfa4214b59a",
+          "name": "Set Start Time"
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "84f24ab3-6559-4d39-830e-cfa26b677de5",
+                  "leftValue": "={{ $input.first().json.score }}",
+                  "rightValue": 0.01,
+                  "operator": {
+                    "type": "number",
+                    "operation": "lt"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            720,
+            -96
+          ],
+          "id": "d0c66fe7-4b17-40dd-ad34-16c98d4b78c5",
+          "name": "If"
+        },
+        {
+          "parameters": {
+            "tableId": "knowledge_gaps",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "user_message",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.message }}"
+                },
+                {
+                  "fieldId": "agent_type",
+                  "fieldValue": "legal"
+                },
+                {
+                  "fieldId": "channel",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.channel }}"
+                },
+                {
+                  "fieldId": "session_id",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.session_id }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            1008,
+            -336
+          ],
+          "id": "c108330d-8818-4bb9-a15e-77f8a6ec487f",
+          "name": "Log Knowledge Gap — Legal",
+          "executeOnce": true,
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "respondWith": "text",
+            "responseBody": "Unfortunately, we don't have information on your question in our knowledge base. We've logged your request and will add relevant materials soon.",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1520,
+            -336
+          ],
+          "id": "ffd6bd12-35ae-4faa-8e66-7887cc3b2337",
+          "name": "Response Gap — Legal"
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "4f8c833d-62c7-4a57-87b9-2b4d9e6d3d5a",
+                  "leftValue": "={{ $input.first().json.score }}",
+                  "rightValue": 0.01,
+                  "operator": {
+                    "type": "number",
+                    "operation": "lt"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            976,
+            592
+          ],
+          "id": "086d3a25-fe24-4734-97c3-6e29ec617291",
+          "name": "If1"
+        },
+        {
+          "parameters": {
+            "tableId": "knowledge_gaps",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "user_message",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.message }}"
+                },
+                {
+                  "fieldId": "agent_type",
+                  "fieldValue": "hr"
+                },
+                {
+                  "fieldId": "channel",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.channel }}"
+                },
+                {
+                  "fieldId": "session_id",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.session_id }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            1264,
+            352
+          ],
+          "id": "691f057d-fa64-44c5-b197-dcc3f2228a26",
+          "name": "Log Knowledge Gap — HR",
+          "executeOnce": true,
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "respondWith": "text",
+            "responseBody": "Unfortunately, we don't have information on your question in our knowledge base. We've logged your request and will add relevant materials soon.",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1776,
+            352
+          ],
+          "id": "5f1cd091-434b-4d9e-bcc2-7ec32e3024db",
+          "name": "Response Gap — HR"
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "ee9bd901-5d9b-45d3-8a4b-0009fb16876a",
+                  "leftValue": "={{ $input.first().json.score }}",
+                  "rightValue": 0.01,
+                  "operator": {
+                    "type": "number",
+                    "operation": "lt"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            976,
+            1280
+          ],
+          "id": "ed792bc5-f6e4-42fb-aaf5-b76d5c19c73e",
+          "name": "If2"
+        },
+        {
+          "parameters": {
+            "tableId": "knowledge_gaps",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "user_message",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.message }}"
+                },
+                {
+                  "fieldId": "agent_type",
+                  "fieldValue": "support"
+                },
+                {
+                  "fieldId": "channel",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.channel }}"
+                },
+                {
+                  "fieldId": "session_id",
+                  "fieldValue": "={{ $('Receive BFS Query Webhook').item.json.body.session_id }}"
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            1264,
+            1040
+          ],
+          "id": "6657d5a5-eeb0-4ed8-86ee-9c7d02c82957",
+          "name": "Log Knowledge Gap — Support",
+          "executeOnce": true,
+          "credentials": {
+            "supabaseApi": {
+              "id": "YOUR_SUPABASE_CREDENTIAL_ID",
+              "name": "BFS Supabase"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "respondWith": "text",
+            "responseBody": "Unfortunately, we don't have information on your question in our knowledge base. We've logged your request and will add relevant materials soon.",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            1776,
+            1040
+          ],
+          "id": "d730c80b-976a-468f-98c6-9f375920821f",
+          "name": "Response Gap — Support"
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "Q2itppFmMzpR6OqEVsny3",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/Q2itppFmMzpR6OqEVsny3",
+              "cachedResultName": "BFS — 05 Escalation"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "session_id": "={{ $('Receive BFS Query Webhook').first().json.body.session_id }}",
+                "agent_type": "legal",
+                "channel": "={{ $('Receive BFS Query Webhook').first().json.body.channel }}",
+                "user_message": "={{ $('Receive BFS Query Webhook').first().json.body.message }}",
+                "escalation_reason": "knowledge_gap",
+                "similarity_score": "={{ $('Legal Vector Store Lookup').first().json.score }}",
+                "client_name": "Basecamp"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "client_name",
+                  "displayName": "client_name",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "agent_type",
+                  "displayName": "agent_type",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "user_message",
+                  "displayName": "user_message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "escalation_reason",
+                  "displayName": "escalation_reason",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "similarity_score",
+                  "displayName": "similarity_score",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number"
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            1296,
+            -336
+          ],
+          "id": "39e8cad8-f777-49ba-a904-b612029b3a4b",
+          "name": "Escalate — Legal"
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "Q2itppFmMzpR6OqEVsny3",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/Q2itppFmMzpR6OqEVsny3",
+              "cachedResultName": "BFS — 05 Escalation"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "similarity_score": "={{ $('HR Vector Store Lookup').first().json.score }}",
+                "agent_type": "hr",
+                "session_id": "={{ $('Receive BFS Query Webhook').first().json.body.session_id }}",
+                "client_name": "Basecamp",
+                "channel": "={{ $('Receive BFS Query Webhook').first().json.body.channel }}",
+                "user_message": "={{ $('Receive BFS Query Webhook').first().json.body.message }}",
+                "escalation_reason": "knowledge_gap"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "client_name",
+                  "displayName": "client_name",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "agent_type",
+                  "displayName": "agent_type",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "user_message",
+                  "displayName": "user_message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "escalation_reason",
+                  "displayName": "escalation_reason",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "similarity_score",
+                  "displayName": "similarity_score",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            1552,
+            352
+          ],
+          "id": "8e059f19-00c6-4d70-b60c-5545c4af4feb",
+          "name": "Escalate — HR"
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "Q2itppFmMzpR6OqEVsny3",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/Q2itppFmMzpR6OqEVsny3",
+              "cachedResultName": "BFS — 05 Escalation"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "similarity_score": "={{ $('Support Vector Store Lookup').first().json.score }}",
+                "agent_type": "support",
+                "client_name": "Basecamp",
+                "session_id": "={{ $('Receive BFS Query Webhook').first().json.body.session_id }}",
+                "channel": "={{ $('Receive BFS Query Webhook').first().json.body.channel }}",
+                "user_message": "={{ $('Receive BFS Query Webhook').first().json.body.message }}",
+                "escalation_reason": "knowledge_gap"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "client_name",
+                  "displayName": "client_name",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "agent_type",
+                  "displayName": "agent_type",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "user_message",
+                  "displayName": "user_message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "escalation_reason",
+                  "displayName": "escalation_reason",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "similarity_score",
+                  "displayName": "similarity_score",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number"
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            1552,
+            1040
+          ],
+          "id": "602c76d7-e92c-401d-8238-ae2a43834aff",
+          "name": "Escalate — Support"
+        },
+        {
+          "parameters": {
+            "modelId": {
+              "__rl": true,
+              "value": "gpt-4o-mini",
+              "mode": "list",
+              "cachedResultName": "GPT-4O-MINI"
+            },
+            "responses": {
+              "values": [
+                {
+                  "content": "=You are analyzing if a user wants to speak with a human agent or manager.\n\nUser message: \"{{ $('Receive BFS Query Webhook').first().json.body.message }}\"\n\nReply with ONLY one word:\n- \"escalate\" if the user explicitly asks for a human, manager, or live agent\n- \"continue\" for ANY other request, including questions in any language\n\nDo NOT escalate questions about company policies, HR, legal, or support topics."
+                }
+              ]
+            },
+            "builtInTools": {},
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.openAi",
+          "typeVersion": 2.1,
+          "position": [
+            -1008,
+            624
+          ],
+          "id": "b51792a9-fc2b-4789-8e77-58d9d97c80da",
+          "name": "Escalation Classifier",
+          "credentials": {
+            "openAiApi": {
+              "id": "YOUR_OPENAI_CREDENTIAL_ID",
+              "name": "OpenAi account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "aee1e8b7-77c8-43b9-b19c-c903cce6c1f2",
+                  "leftValue": "={{ $json.output[0].content[0].text }}",
+                  "rightValue": "escalate",
+                  "operator": {
+                    "type": "string",
+                    "operation": "equals",
+                    "name": "filter.operator.equals"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            -656,
+            624
+          ],
+          "id": "66f2d660-a2e4-4f30-a048-b0a676c89f43",
+          "name": "Check Escalation Request"
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "Q2itppFmMzpR6OqEVsny3",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/Q2itppFmMzpR6OqEVsny3",
+              "cachedResultName": "BFS — 05 Escalation"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "similarity_score": 0,
+                "session_id": "={{ $('Receive BFS Query Webhook').first().json.body.session_id }}",
+                "client_name": "Basecamp",
+                "agent_type": "unknown",
+                "channel": "={{ $('Receive BFS Query Webhook').first().json.body.channel }}",
+                "user_message": "={{ $('Receive BFS Query Webhook').first().json.body.message }}",
+                "escalation_reason": "user_request"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "client_name",
+                  "displayName": "client_name",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "agent_type",
+                  "displayName": "agent_type",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "user_message",
+                  "displayName": "user_message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "escalation_reason",
+                  "displayName": "escalation_reason",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string",
+                  "removed": false
+                },
+                {
+                  "id": "similarity_score",
+                  "displayName": "similarity_score",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number",
+                  "removed": false
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            -432,
+            528
+          ],
+          "id": "ae5022f5-4d7f-408b-beb7-80dae161cd5e",
+          "name": "Escalate — User Request"
+        },
+        {
+          "parameters": {
+            "respondWith": "text",
+            "responseBody": "Your request has been escalated to our team. A specialist will contact you shortly.",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            -144,
+            528
+          ],
+          "id": "292b6296-a878-4037-869b-c0af0115a33f",
+          "name": "Response — User Request"
+        },
+        {
+          "parameters": {
+            "assignments": {
+              "assignments": [
+                {
+                  "id": "14b257da-dc74-41a6-a483-9600a8bd24dd",
+                  "name": "=message",
+                  "value": "={{ $('Receive BFS Query Webhook').item.json.body.message }}",
+                  "type": "string"
+                }
+              ]
+            },
+            "includeOtherFields": true,
+            "options": {}
+          },
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            -432,
+            864
+          ],
+          "id": "b7d4f663-6f4b-406c-9568-cc30ca41ba67",
+          "name": "Pass Message"
+        },
+        {
+          "parameters": {
+            "jsCode": "const item = $input.first();\nconst rawText = item.json.output[0].content[0].text;\n\nlet parsed;\ntry {\n  parsed = JSON.parse(rawText);\n} catch(e) {\n  parsed = { agent_type: 'none', confidence: 0 };\n}\n\nconst agentType = parsed.agent_type || 'none';\nconst confidence = parsed.confidence || 0;\n\n// If confidence is low — route to escalation\nconst routeTo = confidence < 0.7 ? 'ambiguous' : agentType;\n\nreturn [{\n  json: {\n    ...item.json,\n    agent_type: agentType,\n    confidence: confidence,\n    route_to: routeTo\n  }\n}];"
+          },
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            128,
+            1040
+          ],
+          "id": "261adf29-c8d6-4cd1-b375-4f0632d4a902",
+          "name": "Parse Router Response"
+        },
+        {
+          "parameters": {
+            "workflowId": {
+              "__rl": true,
+              "value": "Q2itppFmMzpR6OqEVsny3",
+              "mode": "list",
+              "cachedResultUrl": "/workflow/Q2itppFmMzpR6OqEVsny3",
+              "cachedResultName": "BFS — 05 Escalation"
+            },
+            "workflowInputs": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "session_id": "={{ $('Receive BFS Query Webhook').first().json.body.session_id }}",
+                "client_name": "Basecamp",
+                "agent_type": "={{ $('Parse Router Response').first().json.agent_type }}",
+                "channel": "={{ $('Receive BFS Query Webhook').first().json.body.channel }}",
+                "user_message": "={{ $('Receive BFS Query Webhook').first().json.body.message }}",
+                "escalation_reason": "ambiguous_query",
+                "similarity_score": "={{ $('Parse Router Response').first().json.confidence }}"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "session_id",
+                  "displayName": "session_id",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "client_name",
+                  "displayName": "client_name",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "agent_type",
+                  "displayName": "agent_type",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "channel",
+                  "displayName": "channel",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "user_message",
+                  "displayName": "user_message",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "escalation_reason",
+                  "displayName": "escalation_reason",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "string"
+                },
+                {
+                  "id": "similarity_score",
+                  "displayName": "similarity_score",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "canBeUsedToMatch": true,
+                  "type": "number"
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": true
+            },
+            "options": {
+              "waitForSubWorkflow": true
+            }
+          },
+          "type": "n8n-nodes-base.executeWorkflow",
+          "typeVersion": 1.3,
+          "position": [
+            192,
+            1344
+          ],
+          "id": "417931fd-de1c-4a55-a784-8e78f1180476",
+          "name": "Escalate — Ambiguous Query"
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "{\n  \"response\": \"Your question touches on multiple areas and has been forwarded to our specialist for review. You will receive a response shortly.\",\n  \"agent\": \"escalation\",\n  \"error\": \"\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1.5,
+          "position": [
+            400,
+            1344
+          ],
+          "id": "28d2ca66-17ea-45d2-98bc-cac7fe03acbd",
+          "name": "Response — Ambiguous Query"
+        }
+      ],
+      "pinData": {
+        "Receive BFS Query Webhook": [
+          {
+            "json": {
+              "headers": {
+                "host": "thomasine-zincous-convocationally.ngrok-free.dev",
+                "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.1151",
+                "content-length": "166",
+                "content-type": "application/json",
+                "expect": "100-continue",
+                "x-forwarded-for": "31.0.68.246",
+                "x-forwarded-host": "thomasine-zincous-convocationally.ngrok-free.dev",
+                "x-forwarded-proto": "https",
+                "accept-encoding": "gzip"
+              },
+              "params": {},
+              "query": {},
+              "body": {
+                "message": "I want to speak with a manager please",
+                "session_id": "test_user_request_001",
+                "channel": "dashboard",
+                "api_key": "2b037f46-15a0-404f-ad83-db1c20ac7ca3"
+              },
+              "webhookUrl": "https://thomasine-zincous-convocationally.ngrok-free.dev/webhook/bfs-query",
+              "executionMode": "production"
+            },
+            "pairedItem": {
+              "item": 0
+            }
+          }
+        ]
+      },
+      "connections": {
+        "Receive BFS Query Webhook": {
+          "main": [
+            [
+              {
+                "node": "Set Start Time",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "OpenAI Router": {
+          "main": [
+            [
+              {
+                "node": "Parse Router Response",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Route by Query Type": {
+          "main": [
+            [
+              {
+                "node": "Legal Vector Store Lookup",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "HR Vector Store Lookup",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Support Vector Store Lookup",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Escalate — Ambiguous Query",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Fallback Response",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Generate Legal Embeddings": {
+          "ai_embedding": [
+            [
+              {
+                "node": "Legal Vector Store Lookup",
+                "type": "ai_embedding",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Generate HR Embeddings": {
+          "ai_embedding": [
+            [
+              {
+                "node": "HR Vector Store Lookup",
+                "type": "ai_embedding",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Generate Support Embeddings": {
+          "ai_embedding": [
+            [
+              {
+                "node": "Support Vector Store Lookup",
+                "type": "ai_embedding",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Legal Vector Store Lookup": {
+          "main": [
+            [
+              {
+                "node": "If",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HR Vector Store Lookup": {
+          "main": [
+            [
+              {
+                "node": "If1",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Support Vector Store Lookup": {
+          "main": [
+            [
+              {
+                "node": "If2",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Legal Query Agent": {
+          "main": [
+            [
+              {
+                "node": "Respond to Legal Query",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Response Error Legal",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HR Query Agent": {
+          "main": [
+            [
+              {
+                "node": "Respond to HR Query",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Response Error HR",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Support Query Agent": {
+          "main": [
+            [
+              {
+                "node": "Respond to Support Query",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Response Error Support",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Respond to Legal Query": {
+          "main": [
+            [
+              {
+                "node": "Limit Legal Query Responses",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Respond to HR Query": {
+          "main": [
+            [
+              {
+                "node": "Limit HR Query Responses",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Respond to Support Query": {
+          "main": [
+            [
+              {
+                "node": "Limit Support Query Responses",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Limit HR Query Responses": {
+          "main": [
+            [
+              {
+                "node": "Log HR Query Calls",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Limit Legal Query Responses": {
+          "main": [
+            [
+              {
+                "node": "Log Legal Query Calls",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Limit Support Query Responses": {
+          "main": [
+            [
+              {
+                "node": "Log Support Query Calls",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Set Start Time": {
+          "main": [
+            [
+              {
+                "node": "Escalation Classifier",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "If": {
+          "main": [
+            [
+              {
+                "node": "Log Knowledge Gap — Legal",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Legal Query Agent",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Log Knowledge Gap — Legal": {
+          "main": [
+            [
+              {
+                "node": "Escalate — Legal",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "If1": {
+          "main": [
+            [
+              {
+                "node": "Log Knowledge Gap — HR",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "HR Query Agent",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Log Knowledge Gap — HR": {
+          "main": [
+            [
+              {
+                "node": "Escalate — HR",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "If2": {
+          "main": [
+            [
+              {
+                "node": "Log Knowledge Gap — Support",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Support Query Agent",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Log Knowledge Gap — Support": {
+          "main": [
+            [
+              {
+                "node": "Escalate — Support",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Escalate — Legal": {
+          "main": [
+            [
+              {
+                "node": "Response Gap — Legal",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Escalate — HR": {
+          "main": [
+            [
+              {
+                "node": "Response Gap — HR",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Escalate — Support": {
+          "main": [
+            [
+              {
+                "node": "Response Gap — Support",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Escalation Classifier": {
+          "main": [
+            [
+              {
+                "node": "Check Escalation Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Check Escalation Request": {
+          "main": [
+            [
+              {
+                "node": "Escalate — User Request",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Pass Message",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Escalate — User Request": {
+          "main": [
+            [
+              {
+                "node": "Response — User Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Pass Message": {
+          "main": [
+            [
+              {
+                "node": "OpenAI Router",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Parse Router Response": {
+          "main": [
+            [
+              {
+                "node": "Route by Query Type",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Escalate — Ambiguous Query": {
+          "main": [
+            [
+              {
+                "node": "Response — Ambiguous Query",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "active": true,
+      "settings": {
+        "executionOrder": "v1",
+        "binaryMode": "separate",
+        "availableInMCP": false
+      },
+      "versionId": "YOUR_VERSION_ID",
+      "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "YOUR_N8N_INSTANCE_ID"
+      },
+      "id": "YOUR_WORKFLOW_ID",
+      "tags": []
+    }
