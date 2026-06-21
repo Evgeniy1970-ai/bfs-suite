@@ -250,6 +250,6 @@ MIT License — feel free to use, modify, and build upon this project.
 
 Built by **Yevhenii** as a portfolio project demonstrating production-grade AI automation for small businesses.
 
-- 🌐 Website: [neolithai.netlify.app](https://neolithai.netlify.app)
-- 💼 LinkedIn: *(your LinkedIn URL)*
-- 🛠️ Upwork: *(your Upwork URL)*
+- 🌐 Website:  (https://neolithai.agency/)
+- 💼 LinkedIn: [*(your LinkedIn URL)*](https://www.linkedin.com/in/yevhenii-nohin-06b403347/)
+- 🛠️ Upwork: [*(your Upwork URL)*](https://www.upwork.com/freelancers/~013cd102dcb30a209f)
