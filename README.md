@@ -248,8 +248,9 @@ MIT License — feel free to use, modify, and build upon this project.
 
 ## 👤 Author
 
-Built by **Yevhenii** as a portfolio project demonstrating production-grade AI automation for small businesses.
+Built by **Yevhenii Nohin**, founder of [NeolithAI Agency](https://neolithai.agency), as a portfolio project demonstrating AI automation for small businesses.
 
-- 🌐 Website:  (https://neolithai.agency/)
-- 💼 LinkedIn: [*(your LinkedIn URL)*](https://www.linkedin.com/in/yevhenii-nohin-06b403347/)
-- 🛠️ Upwork: [*(your Upwork URL)*](https://www.upwork.com/freelancers/~013cd102dcb30a209f)
+- 🌐 Website: [neolithai.agency](https://neolithai.agency)
+- 📧 Email: [yevhenii.nohin@neolithai.agency](mailto:yevhenii.nohin@neolithai.agency)
+- 💼 LinkedIn: [Yevhenii Nohin](https://www.linkedin.com/in/yevhenii-n-06b403347/)
+- 🛠️ Upwork: [NeolithAI — AI Automation](https://www.upwork.com/freelancers/~013cd102dcb30a209f)
